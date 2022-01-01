@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AuthProvider from "./Context/AuthProvider";
+import AdminRoute from "./Pages/Authentication/AdminRoute/AdminRoute";
+import Login from "./Pages/Authentication/Login";
+import PrivateRoute from "./Pages/Authentication/PrivateRoute/PrivateRoute";
+import Registration from "./Pages/Authentication/Registration";
+import Home from "./Pages/Home/Home";
+import ManageUsers from "./Pages/ManageUsers/ManageUsers";
+import NotFound from "./Pages/NotFound/NotFound";
+import Payment from "./Pages/Payment/Payment";
+import ProflePage from "./Pages/ProfilePage/ProflePage";
+import Header from "./Pages/Shared/Header";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Header></Header>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/registration" element={<Registration />} />
+          <Route path="/profile" element={<PrivateRoute><ProflePage /></PrivateRoute>} />
+          <Route path="/payment/:price" element={<Payment />} />
+          <Route path="/manageUser" element={<AdminRoute><ManageUsers /></AdminRoute>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
